@@ -1,0 +1,50 @@
+{% extends 'base.html' %}<!-- Everything should extend 'base.html' -->
+{% block page %} - Home{% endblock %}
+
+{% block head %}
+  <script type="text/javascript">
+  function changeIframeSrc(new_src) {
+  frame = document.getElementById('main_iframe')
+  frame.src = new_src
+  }
+  function resizeIframe(obj) {
+    obj.style.height = '0px';
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+  </script>
+<style type="text/css">
+a.qn {
+  cursor: pointer;
+  font-size: 13px;
+  color:#666699;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div>
+  <h3>Search results for <i>{{ keyword }}</i>:</h3>
+  <ul>
+  {% for page in pages %}
+  {% if not page.div %}
+    <li>
+    <b>
+    {% if page.title|length > 30 %}
+    {{ page.title|slice:":30" }}...
+    {% else %}
+    {{ page.title }}
+    {% endif %}
+    </b>
+    <a class="qn"
+    onclick="changeIframeSrc('/quickview/{{ page.id }}/?keyword={{ keyword }}')">
+    Quick View</a> | 
+    <a class="qn" onclick="location.href='/display/{{ page.id }}/?keyword={{ keyword }}'">Navigate</a>
+    </li>
+  {% endif %}
+  {% endfor %}
+  </ul>
+  <iframe id="main_iframe" width="100%" onload='javascript:resizeIframe(this);'
+  style="border:1px solid black;"
+  src="/quickview/{{ pages.0.id }}/?keyword={{ keyword }}"></iframe>
+</div>
+{% endblock %}

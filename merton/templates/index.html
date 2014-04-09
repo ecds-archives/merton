@@ -1,0 +1,44 @@
+{% extends 'base.html' %}<!-- Everything should extend 'base.html' -->
+{% block page %} - Home{% endblock %}
+{% block head %}
+
+<!-- Hard-coded metadata -->
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+  <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+  <meta name="DC.title" content="Thomas Merton's Red Diary"/>
+  <meta name="DC.creator" content="Lewis H. Beck Center for Electronic Collections & Services"/>
+  <meta name="DC.publisher" content="Lewis H. Beck Center for Electronic Collections & Services"/>
+  <meta name="DC.contributor" content="Leiva-Merikakis, Erasmo, 1946"/>
+  <meta name="DC.contributor" content="Montaldo, Jonathan"/>
+  <meta name="DC.subject" content="Merton, Thomas, 1915-1968--Diaries."/>
+  <meta name="DC.subject" content="Trappists--United States--Diaries."/>
+  <meta name="DC.subject" content="Emory University"/>
+  <meta name="DC.description" content="A digitized edition of Merton's Red Diary, along with the translations and notes of editors Erasmo Leiva-Merikakis and Jonathan Montaldo.  The fully-searchable text is presented alongside facsimiles from Merton's handwritten diary."/>
+  <meta name="DC.type" scheme="DCTERMS.DCMIType" content="text"/>
+  <meta name="DC.format" scheme="DCTERMS.IMT" content="text/html"/>
+  <meta name="DC.identifier" content=">http://beck.library.emory.edu/merton/"/>
+  <meta name="DC.date" content="2006-06-06"/>
+<!-- end of metadata -->
+
+{% endblock %}
+{% block body %}
+<div>
+In 1964 and 1965 Thomas Merton used a red-leather "day-by-day"
+  calendar for the year 1959 as a diary. Unlike his other published
+  diaries and journals, this diary was not used for personal entries;
+  rather he used it as a collection for the words of others. As noted
+  by Erasmo Leiva-Merikakis and Jonathan Montaldo in the <a
+  href="/display/preface">Foreword</a> to the print edition, "the Red
+  Diary is a convergence of Merton's spontaneous attractions." This
+  collection of the thoughts and writings of others provide us with
+  insight into Merton's "interior climate" - "these collected'words'
+  reflect his fears and his hopes, and more importantly they reflect
+  his prayer, at this new and long awaited juncture in his life" -
+  that of living full-time at his hermitage.<br><br>
+  {% load staticfiles %}
+  <div style="text-align: center;">
+  <img src="{% static 'images/red-diary-small.jpg' %}" />
+  </div>
+  <br>
+</div>
+{% endblock %}

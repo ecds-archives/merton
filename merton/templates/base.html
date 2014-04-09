@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>Red Diary{% block page %}{% endblock %}</title>
+{% load staticfiles %}
+{% if metadata %}
+   {( metadata|safe }}
+{% endif %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/mertonv2.css' %}">
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+{% block head %}{% endblock %}
+</head>
+<body{% block optional_onload %}{% endblock %}>
+<div class="container">
+<div class="header">
+  <a href="/home"><h1>Thomas Merton's Red Diary</h1></a>
+  <ul>
+  <li><a class="nav_text" href="/home/">Home</a><span class="break"> |</span></li>
+  <li><a class="nav_text" href="/contents/">Contents</a><span class="break"> |</span></li>
+  <li><a class="nav_text" href="/display/preface/">Foreward</a><span class="break"> |</span></li>
+  <li><a class="nav_text" href="/display/bibliography/">Bibliography</a><span class="break"> |</span></li>
+  <li><a class="nav_text" href="/display/index/">Index</a><span class="break"> |</span></li>
+  <li><a class="nav_text" href="/display/synopsis/">Synopsis</a><span class="break"> |</span></li>
+  <li><a class="nav_text" href="/browse/">Browse Quotations</a><span class="break"> |</span></li>
+  <li><a class="nav_text" href="/credits/">Credits</a><br>
+  </ul>
+  <form action="/search/" method="get">
+  <span id="key">
+  Key:
+  <p class="trans">Translations</p> |
+  <p class="note">Editor's Notes</p> |
+  <span class="inline-note-editor">[Inline Notes]</span>
+  </span>
+  <input type="text" value="Keyword Search" onfocus="this.value=''"
+  onblur="this.value='Keyword Search'" name="keyword"/>
+  <input type="submit" value="Submit"/>
+  </form>
+</div>
+<div class="body">{% block body %}{% endblock %}</div>
+</div>
+{% include 'google-trackmerton.html' %}
+</body>
+</html>

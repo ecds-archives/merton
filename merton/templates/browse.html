@@ -1,0 +1,69 @@
+<!-- Unhelpful documentation:
+This should be equivalent to browse.php from the original site.
+-->
+{% extends 'base.html' %}<!-- Everything should extend 'base.html' -->
+{% block page %} - Browse{% endblock %}
+
+{% block optional_onload %}
+{% if not filter %}
+onload="unexpandAll()"
+{% endif %}
+{% endblock %}
+
+{% block body %}
+{% load staticfiles %}
+<script type='text/javascript'>
+function unexpandAll() {//Unexpands all sections on load
+  arrows = document.getElementsByClassName("showhidearrow");
+  for (var i = 0; i < arrows.length; i++) {
+    if (arrows[i]) {
+      $("ul." + arrows[i].id).slideUp();
+      arrows[i].src = "{% static 'images/unexpanded_arrow.png' %}"
+    }
+  }
+}
+unexpanded_arrow = "{% static 'images/unexpanded_arrow.png' %}"
+expanded_arrow = "{% static 'images/expanded_arrow.png' %}"
+function showhide(clicked_id) { /*Expands and unexpands a section*/
+	targ = 'ul.'+clicked_id
+	$(targ).slideToggle(300);
+	current_image = document.getElementById(clicked_id).src.split('/')
+	image_name = current_image[current_image.length - 1]
+	if (image_name == 'expanded_arrow.png') {
+		document.getElementById(clicked_id).src = unexpanded_arrow
+	} else {
+		document.getElementById(clicked_id).src = expanded_arrow
+	}
+}
+</script>
+<b>Browse quotations by category:</b><br />
+<a href="/browse/author">Author</a><br />
+<a href="/browse/language">Language</a><br /><br />
+Quotations{% if filter %} by {{ filter }}{% endif %}:
+{% if category == "language" %}
+  {% regroup quotes|dictsort:"lang" by lang as quotes %}
+{% elif category == "author" %}
+  {% regroup quotes|dictsort:"author" by author as quotes %}
+{% endif %}
+<ul>
+  {% for quote in quotes %}
+  {% if not filter or quote.grouper|lower == filter|lower %}
+    {% if quote.grouper and quote.grouper != "None" %}
+      <li><a class="mobile_option" onclick="showhide('{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}')">{{ quote.grouper }} <font size='2'>{{ quote.list|length }} Result{{ quote.list|length|pluralize }}</font></a>
+  <img id="{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}"
+  class="showhidearrow"
+  onclick="showhide(this.id)"
+  src="{% static 'images/expanded_arrow.png' %}">
+  </img>
+      <ul class="{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}">
+        {% for item in quote.list %}
+          <li><a href="/display/{{ item.id|slice:':3' }}">
+	{{ item.title }}</a>: {{ item.text|slice:':100' }}...</li>
+        {% endfor %}
+      </ul>
+      </li>
+    {% endif %}
+      {% endif %}
+  {% endfor %}
+</ul>
+{% endblock %}

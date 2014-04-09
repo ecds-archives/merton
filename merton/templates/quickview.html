@@ -1,0 +1,55 @@
+<html>
+<head>
+{% if dateline or keywords %}
+<div class="doc_info">
+  {% if keywords %}<input type="checkbox" name="highlighting"
+  id="highlightBox" checked
+  onchange="setHighlighting()">Highlighting for
+  {% for keyword in keywords %}
+  <u><i>{{ keyword }}</i></u>
+  {% endfor %}
+  {% endif %}
+  {% if dateline and dateline %}<span style="float: right;">{{ dateline }}</span>{% endif %}
+</div>
+<hr>
+<br>
+{% endif %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css"
+href="{% static 'css/mertonv2.css' %}">
+<style>
+body { target-name: top; }
+</style>
+<script type="text/javascript">
+function setHighlighting() {
+var highlighted = document.getElementsByClassName("highlight");
+var checkbox = document.getElementById("highlightBox");
+var color = "#E6FF00"
+if (checkbox.checked) {
+  for (var i=0; i<highlighted.length; i++) {
+  highlighted[i].style.backgroundColor = color;
+  }
+} else {
+  for (var i=0; i<highlighted.length; i++) {
+  highlighted[i].style.backgroundColor = "transparent";
+  }
+}
+}
+</script>
+</head>
+<body onload='setHighlighting()' class="iframe_inset">
+{% if page %}
+	{% if format %}
+{% if keywords %}
+		{{ format|safe }}
+{% else %}
+{{ format|safe }}
+{% endif %}
+	{% else %}
+		<p>No format.</p>
+	{% endif %}
+{% else %}
+	<p>Nothing found.</p>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,99 @@
+body {
+    background-color: #FFF8F0;
+    font-family: "Book Antiqua", Times, serif;
+    font-size: 95%;
+}
+body.iframe_inset {
+    background-color: white;
+}
+div.container {
+    margin-right: auto;
+    margin-left: auto;
+    width: 900px;
+    background-color: white;
+    padding-bottom: 10px;
+}
+div.header {
+    text-align: center;
+}
+div.header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+div.header ul li {
+    display: inline;
+}
+div.header h1 {
+    font-family: cursive;
+    color: #9F0909;
+    text-decoration: none;
+}
+div.body {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* Links */
+a { text-decoration:none; }
+a:link { color:#2E64FE; }
+a:visited { color:#2E64FE; }
+a:hover { color:#A9D0F5; }
+a:active { color:#2E64FE; }
+
+.showhidearrow { cursor: pointer; }
+img { border: 0px }
+div#texttoolong { display: inline-block }
+
+p.head { font-weight: bold; font-size: 115%; }
+p.byline, p.dateline { margin-left: 0.5in; }
+p.milestone { text-align: center; }
+
+span.bibl { margin-left:1in; }
+td.link { text-align:center; }
+
+div.note, p.note {color:#6f3410; }
+hr.note { width:25%; color:#6f3410; background-color:#6f3410; height:1px;
+          border:0px; margin-left:0px; }
+p.trans { color:#175F1A;font-style:italic; }
+span.inline-note-editor { color:#555555; }
+span.inline-note { color:#555555; }
+span.margin-note {}
+span p { display: inline; margin-left: 0px; }
+
+span.superscript { vertical-align:super; font-size:75%; }
+span.underline { text-decoration:underline; }
+span.hi { font-weight:bold; }
+span.term { padding-left:10px; }
+
+div.figure { float:left; padding:5px; text-align:center;}
+
+div.credits { margin-left:1.75in; }
+div.credits h1 { font-size:135%; }
+div.credits h2 { font-size:105%; }
+p.credits { text-indent:-0.25in; margin: 0px 0px 0px 0.5in;}
+
+#contentsul {padding-left:210px;}
+
+@media only screen and (max-width:900px) {
+    div.container {
+	width: auto;
+    }
+}
+@media only screen and (max-width:700px) {
+    #key {
+	display: none;
+	visibility: hidden;
+    }
+    div.header ul li {
+	display: block;
+	width: 100%;
+	font-size:105%;
+    }
+    form {
+	padding-top: 5px;
+    }
+    span.break {
+	display: none;
+    }
+}

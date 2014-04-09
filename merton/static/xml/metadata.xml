@@ -1,0 +1,19 @@
+<dc xmlns:dc="http://purl.org/dc/elements/1.1/">
+<!-- dublin core metadata for Merton Red Diary site -->
+<dc:title>Thomas Merton's Red Diary</dc:title>
+<dc:creator>Lewis H. Beck Center for Electronic Collections &amp; Services</dc:creator>
+<dc:publisher>Lewis H. Beck Center for Electronic Collections &amp; Services</dc:publisher>
+<dc:contributor>Leiva-Merikakis, Erasmo, 1946-</dc:contributor>
+<dc:contributor>Montaldo, Jonathan.</dc:contributor>
+<dc:subject>Merton, Thomas, 1915-1968--Diaries.</dc:subject>
+<dc:subject>Trappists--United States--Diaries.</dc:subject>
+<dc:subject>Emory University</dc:subject>
+<dc:description>A digitized edition of Merton's Red Diary, along with
+the translations and notes of editors Erasmo Leiva-Merikakis and
+Jonathan Montaldo.  The fully-searchable text is presented alongside
+facsimiles from Merton's handwritten diary.</dc:description>
+<dc:type>text</dc:type>
+<dc:format>text/html</dc:format>
+<dc:identifier>http://beck.library.emory.edu/merton/</dc:identifier>
+<dc:date>2006-06-06</dc:date>
+</dc>
