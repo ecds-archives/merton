@@ -45,6 +45,8 @@ a.qn {
   </ul>
   <iframe id="main_iframe" width="100%" onload='javascript:resizeIframe(this);'
   style="border:1px solid black;"
-  src="/quickview/{{ pages.0.id }}/?keyword={{ keyword }}"></iframe>
+  src="{% if pages %}
+  /quickview/{{ pages.0.id }}/?keyword={{ keyword }}
+  {% endif %}"></iframe>
 </div>
 {% endblock %}

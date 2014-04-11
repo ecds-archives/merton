@@ -20,6 +20,42 @@
   <meta name="DC.date" content="2006-06-06"/>
 <!-- end of metadata -->
 
+<style>
+#red_diary {
+  background-image: url('/static/images/spritesheet.jpg');
+  border-style:solid;
+  border-width:1px;
+  border-color:black;
+}
+@media only screen and (max-width:700px) {
+  #red_diary {
+    display:none;
+  }
+}
+</style>
+
+<script type="text/javascript">
+/*
+I'm pretty excited about this actually, even though it looks
+symple. Instead of using 63 different images for each page, this
+bit uses CSS sprites. There is a big sprite sheet called
+"spritesheet.jpg", and the image simply moves around to show
+different portions of that sheet. This means you only have one
+HTTP request and a smaller overall transfer amount. Making
+the sprite sheet was a real pain (and it meant standardizing
+the images to 400px x 540px) but maybe it's worth it? I thought
+it was a cool idea.
+*/
+function changeImage(e, img) {
+  var posX = event.offsetX?(event.offsetX):event.pageX-img.offsetLeft;
+  var wid = 400;
+  img.width = wid;
+  var index = Math.floor(posX * 63 / wid);
+  var imgX = (index % 10) * wid;
+  var imgY = Math.floor(index/10) * 540;
+  img.style.backgroundPosition = '-' + imgX + 'px -' + imgY + 'px';
+}
+</script>
 {% endblock %}
 {% block body %}
 <div>
@@ -37,7 +73,11 @@ In 1964 and 1965 Thomas Merton used a red-leather "day-by-day"
   that of living full-time at his hermitage.<br><br>
   {% load staticfiles %}
   <div style="text-align: center;">
-  <img src="{% static 'images/red-diary-small.jpg' %}" />
+  <img
+    width="400px"
+    height="540px"
+    id="red_diary"
+    onmousemove="changeImage(event,this)"></img>
   </div>
   <br>
 </div>

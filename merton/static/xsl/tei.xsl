@@ -4,7 +4,7 @@
 		xmlns:exist="http://exist.sourceforge.net/NS/exist"
                version="1.0">
 
-  <xsl:variable name="figure-path">http://beck.library.emory.edu/frenchrevolution/image-content/</xsl:variable>
+  <xsl:variable name="figure-path">/static/images/pages/</xsl:variable>
   <xsl:variable name="figure-suffix">.jpg</xsl:variable>
   <xsl:variable name="thumbnail-path">http://beck.library.emory.edu/frenchrevolution/image-content/thumbnails/</xsl:variable>
   <xsl:variable name="thumbnail-suffix">.gif</xsl:variable>
@@ -129,13 +129,14 @@
     </span>
   </xsl:template>
 
-
 <xsl:template match="tei:figure">
-  <img>
-    <xsl:attribute name="src"><xsl:value-of select="concat($figure-path, @entity, $figure-suffix)"/></xsl:attribute>
+  <a>
+    <xsl:attribute name="href">/imageview/<xsl:value-of select="../@xml:id"/></xsl:attribute>
     <xsl:attribute name="alt"><xsl:value-of select="normalize-space(tei:figDesc)"/></xsl:attribute>
-    <xsl:attribute name="title"><xsl:value-of select="normalize-space(tei:figDesc)"/></xsl:attribute>
-  </img>
+    <xsl:attribute name="target">_blank</xsl:attribute>
+    <xsl:attribute name="id">page_image</xsl:attribute>
+    View Facsimile
+  </a>
 </xsl:template>
 
 </xsl:stylesheet>

@@ -3,6 +3,8 @@ true = True
 
 import os
 import re
+from os import listdir
+from os.path import isfile, join
 from urllib import urlencode
 
 import datetime
@@ -24,16 +26,21 @@ import eulexistdb
 from eulexistdb.query import escape_string
 from eulexistdb.exceptions import DoesNotExist, ReturnedMultiple
 
-#Load red_diary.xml as a string from database
+# Loads red_diary.xml as a string from database
 db = eulexistdb.db.ExistDB(settings.EXISTDB_SERVER_URL)
 path = 'merton/red_diary.xml'
 try:
-    text_xml = db.getDoc(path).encode('ascii','ignore') #Loads document from server as a string to get around the ascii problem
+    #Loads document from server as a string to get around 'the ascii problem'
+    text_xml = db.getDoc(path).encode('ascii','ignore')
 except:
     print 'Document cannot be accessed'
     raise Http404
-#text_xml = os.path.join(settings.BASE_DIR, 'static', 'xml', 'text.xml') # Path to main text document locally
-display_xsl = os.path.join('file:///' + settings.BASE_DIR, 'static', 'xsl', 'tei.xsl') #XSL for displaying a page
+
+# Path to XSLT file
+display_xsl = join('file:///' + settings.BASE_DIR, 'static', 'xsl', 'tei.xsl')
+
+# Path to image folder
+image_folder = join(settings.BASE_DIR, 'static', 'images', 'pages')
 
 def index(request):
     context = {}
@@ -125,7 +132,27 @@ def quickview(request, doc_id):
         dateline = dateline + page.dateline[1].strip() + ', ' + page.dateline[0].strip()
     context['dateline'] = dateline
     return render_to_response('quickview.html', context, context_instance=RequestContext(request))
-    
+
+def imageview(request, image):
+    context = {}
+    images = [ f for f in listdir(image_folder) if isfile(join(image_folder, f)) ]
+    prev = ''
+    next = ''
+    for i in range(0, len(images) - 1):
+        if images[i+1] == image + '.jpg':
+            prev = images[i][:-4]
+            if i < len(images) - 2:
+                next = images[i + 2][:-4]
+            break
+        if images[i] == image + '.jpg':
+            next = images[i+1][:-4]
+            break
+    if len(prev) > 0:
+        context['prev'] = prev
+    if len(next) > 0:
+        context['next'] = next
+    context['image_name'] = image
+    return render_to_response('imageview.html', context, context_instance=RequestContext(request))
 
 def contents(request):
     context = {}

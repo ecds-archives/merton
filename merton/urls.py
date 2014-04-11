@@ -14,4 +14,5 @@ urlpatterns = patterns('merton/views',
     url(r'^display/(.+)/$', display_page),
     url(r'^search/$', search),
     url(r'^quickview/(.+)/$', quickview),
+    url(r'^imageview/(.+)/$', imageview),
 )
