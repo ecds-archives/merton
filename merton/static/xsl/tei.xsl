@@ -4,7 +4,7 @@
 		xmlns:exist="http://exist.sourceforge.net/NS/exist"
                version="1.0">
 
-  <xsl:variable name="figure-path">/static/images/pages/</xsl:variable>
+  <xsl:variable name="figure-path">/Users/bbolte/Sites/Merton/merton/static/images/pages/</xsl:variable>
   <xsl:variable name="figure-suffix">.jpg</xsl:variable>
   <xsl:variable name="thumbnail-path">http://beck.library.emory.edu/frenchrevolution/image-content/thumbnails/</xsl:variable>
   <xsl:variable name="thumbnail-suffix">.gif</xsl:variable>
@@ -40,7 +40,6 @@
   <xsl:template match="tei:ref[string-length(text()) > 0]">
   	<a>
   		<xsl:attribute name="href">/display/<xsl:value-of select="translate(@target, '#', '')"/></xsl:attribute>
-<xsl:attribute name="target">_top</xsl:attribute>
   		<xsl:apply-templates/>
   	</a>
   </xsl:template>
@@ -100,13 +99,6 @@
 
   <xsl:template match="tei:bibl/tei:author/tei:name/tei:choice/tei:reg"/>
 
-  <xsl:template match="tei:cit/tei:bibl/tei:author/tei:name/tei:choice/tei:sic">
-<span class="bibl"><a>
-<xsl:attribute name="href">/browse/author?filter=<xsl:value-of select="."/></xsl:attribute>
-<xsl:apply-templates/>
-</a></span>
-  </xsl:template>
-
   <xsl:template match="tei:foreign">
     <i><xsl:apply-templates/></i>
   </xsl:template>
@@ -129,14 +121,15 @@
     </span>
   </xsl:template>
 
+
 <xsl:template match="tei:figure">
-  <a>
-    <xsl:attribute name="href">/imageview/<xsl:value-of select="../@xml:id"/></xsl:attribute>
+    <br/>
+  <img>
+    <xsl:attribute name="src"><xsl:copy-of select="$figure-path"/><xsl:value-of select="../@xml:id"/><xsl:copy-of select="$figure-suffix"/></xsl:attribute>
     <xsl:attribute name="alt"><xsl:value-of select="normalize-space(tei:figDesc)"/></xsl:attribute>
-    <xsl:attribute name="target">_blank</xsl:attribute>
-    <xsl:attribute name="id">page_image</xsl:attribute>
-    View Facsimile
-  </a>
+    <xsl:attribute name="title"><xsl:value-of select="normalize-space(tei:figDesc)"/></xsl:attribute>
+  </img>
+    <br/><br/>
 </xsl:template>
 
 </xsl:stylesheet>

@@ -28,8 +28,8 @@ DATABASES = {
 
 EXISTDB_SERVER_PROTOCOL = "http://"
 EXISTDB_SERVER_HOST     = "kamina.library.emory.edu:8080/exist/"
-EXISTDB_SERVER_USER     = ""
-EXISTDB_SERVER_PASSWORD = ""
+EXISTDB_SERVER_USER     = "bbolte"
+EXISTDB_SERVER_PASSWORD = "!QAZ@WSX"
 EXISTDB_SERVER_URL      = EXISTDB_SERVER_PROTOCOL + EXISTDB_SERVER_HOST
 EXISTDB_ROOT_COLLECTION = "/merton"
 
@@ -77,7 +77,7 @@ STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
+STATIC_URL = path.join(BASE_DIR, 'static/')
 
 # Additional locations of static files
 STATICFILES_DIRS = (

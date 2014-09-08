@@ -1,84 +1,41 @@
+<!-- Obligitory confusing attempt at documentation:
+This is the index file that is loaded on startup. The general layout
+for these webpages is to extend 'base.html', which acts as a
+formatter. We'll go with this approach for a bit to see if it works.
+-->
 {% extends 'base.html' %}<!-- Everything should extend 'base.html' -->
 {% block page %} - Home{% endblock %}
 {% block head %}
-
 <!-- Hard-coded metadata -->
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
-  <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
-  <meta name="DC.title" content="Thomas Merton's Red Diary"/>
-  <meta name="DC.creator" content="Lewis H. Beck Center for Electronic Collections & Services"/>
-  <meta name="DC.publisher" content="Lewis H. Beck Center for Electronic Collections & Services"/>
-  <meta name="DC.contributor" content="Leiva-Merikakis, Erasmo, 1946"/>
-  <meta name="DC.contributor" content="Montaldo, Jonathan"/>
-  <meta name="DC.subject" content="Merton, Thomas, 1915-1968--Diaries."/>
-  <meta name="DC.subject" content="Trappists--United States--Diaries."/>
-  <meta name="DC.subject" content="Emory University"/>
-  <meta name="DC.description" content="A digitized edition of Merton's Red Diary, along with the translations and notes of editors Erasmo Leiva-Merikakis and Jonathan Montaldo.  The fully-searchable text is presented alongside facsimiles from Merton's handwritten diary."/>
-  <meta name="DC.type" scheme="DCTERMS.DCMIType" content="text"/>
-  <meta name="DC.format" scheme="DCTERMS.IMT" content="text/html"/>
-  <meta name="DC.identifier" content=">http://beck.library.emory.edu/merton/"/>
-  <meta name="DC.date" content="2006-06-06"/>
-<!-- end of metadata -->
-
-<style>
-#red_diary {
-  background-image: url('/static/images/spritesheet.jpg');
-  border-style:solid;
-  border-width:1px;
-  border-color:black;
-}
-@media only screen and (max-width:700px) {
-  #red_diary {
-    display:none;
-  }
-}
-</style>
-
-<script type="text/javascript">
-/*
-I'm pretty excited about this actually, even though it looks
-symple. Instead of using 63 different images for each page, this
-bit uses CSS sprites. There is a big sprite sheet called
-"spritesheet.jpg", and the image simply moves around to show
-different portions of that sheet. This means you only have one
-HTTP request and a smaller overall transfer amount. Making
-the sprite sheet was a real pain (and it meant standardizing
-the images to 400px x 540px) but maybe it's worth it? I thought
-it was a cool idea.
-*/
-function changeImage(e, img) {
-  var posX = event.offsetX?(event.offsetX):event.pageX-img.offsetLeft;
-  var wid = 400;
-  img.width = wid;
-  var index = Math.floor(posX * 63 / wid);
-  var imgX = (index % 10) * wid;
-  var imgY = Math.floor(index/10) * 540;
-  img.style.backgroundPosition = '-' + imgX + 'px -' + imgY + 'px';
-}
-</script>
+<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="DC.title" content="Thomas Merton's Red Diary"/>
+<meta name="DC.creator" content="Lewis H. Beck Center for Electronic Collections & Services"/>
+<meta name="DC.publisher" content="Lewis H. Beck Center for Electronic Collections & Services"/>
+<meta name="DC.contributor" content="Leiva-Merikakis, Erasmo, 1946"/>
+<meta name="DC.contributor" content="Montaldo, Jonathan"/>
+<meta name="DC.subject" content="Merton, Thomas, 1915-1968--Diaries."/>
+<meta name="DC.subject" content="Trappists--United States--Diaries."/>
+<meta name="DC.subject" content="Emory University"/>
+<meta name="DC.description" content="A digitized edition of Merton's Red Diary, along with the translations and notes of editors Erasmo Leiva-Merikakis and Jonathan Montaldo.  The fully-searchable text is presented alongside facsimiles from Merton's handwritten diary."/>
+<meta name="DC.type" scheme="DCTERMS.DCMIType" content="text"/>
+<meta name="DC.format" scheme="DCTERMS.IMT" content="text/html"/>
+<meta name="DC.identifier" content=">http://beck.library.emory.edu/merton/"/>
+<meta name="DC.date" content="2006-06-06"/>
 {% endblock %}
 {% block body %}
-<div>
-In 1964 and 1965 Thomas Merton used a red-leather "day-by-day"
-  calendar for the year 1959 as a diary. Unlike his other published
-  diaries and journals, this diary was not used for personal entries;
-  rather he used it as a collection for the words of others. As noted
-  by Erasmo Leiva-Merikakis and Jonathan Montaldo in the <a
-  href="/display/preface">Foreword</a> to the print edition, "the Red
-  Diary is a convergence of Merton's spontaneous attractions." This
-  collection of the thoughts and writings of others provide us with
-  insight into Merton's "interior climate" - "these collected'words'
-  reflect his fears and his hopes, and more importantly they reflect
-  his prayer, at this new and long awaited juncture in his life" -
-  that of living full-time at his hermitage.<br><br>
-  {% load staticfiles %}
-  <div style="text-align: center;">
-  <img
-    width="400px"
-    height="540px"
-    id="red_diary"
-    onmousemove="changeImage(event,this)"></img>
-  </div>
-  <br>
+<div class="container">
+    <h3>
+        <table>
+            <tbody>
+                <tr><td><a href="{% url 'contents' %}">Table of Contents</a></td></tr>
+                <tr><td><a href="{% url 'display' 'preface' %}">Foreward</a></td></tr>
+                <tr><td><a href="{% url 'display' 'bibliography' %}">Bibliography</a></td></tr>
+                <tr><td><a href="{% url 'display' 'index' %}">Index</a></td></tr>
+                <tr><td><a href="{% url 'display' 'synopsis' %}">Synopsis</a></td></tr>
+                <tr><td><a href="{% url 'about' %}">About</a></td></tr>
+            </tbody>
+        </table>
+    </h3>
 </div>
 {% endblock %}

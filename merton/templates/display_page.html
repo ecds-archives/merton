@@ -4,70 +4,36 @@
 
 {% block optional_onload %} onload='setHighlighting()'{% endblock %}
 {% block head %}
-<script type="text/javascript">
-function setHighlighting() {
-var highlighted = document.getElementsByClassName("highlight");
-var checkbox = document.getElementById("highlightBox");
-var color = "#E6FF00"
-if (checkbox.checked) {
-  for (var i=0; i<highlighted.length; i++) {
-  highlighted[i].style.backgroundColor = color;
-  }
-} else {
-  for (var i=0; i<highlighted.length; i++) {
-  highlighted[i].style.backgroundColor = "transparent";
-  }
+<style>
+.highlight {
+    color: red;
 }
-}
-</script>
+</style>
 {% endblock %}
 {% block body %}
-{% if dateline or keywords %}
-<div class="doc_info">
-  {% if keywords %}<input type="checkbox" name="highlighting"
-  id="highlightBox" checked
-  onchange="setHighlighting()">Highlighting for
-  {% for keyword in keywords %}
-  <u><i>{{ keyword }}</i></u>
-  {% endfor %}
-  {% endif %}
-  {% if dateline and dateline %}<span style="float: right;">{{ dateline }}</span>{% endif %}
-</div>
-{% if not keywords %}
-<br>
-{% endif %}
-<hr>
-<br>
-{% endif %}
-{% if page %}
-	{% if format %}
-{% if keywords %}
-		{{ format|safe }}
-{% else %}
-{{ format|safe }}
-{% endif %}
-	{% else %}
-		<p>No format.</p>
-	{% endif %}
-{% else %}
-	<p>Nothing found.</p>
-{% endif %}
-<br />
-<br />
-<br />
 
-{% if prev %}
-<button class="prev"
-type="button"
-onclick="location.href='/display/{{ prev }}/{% if keyword_url %}?keyword={{ keyword_url }}{% endif %}'">
-Previous
-</button>
-{% endif %}
-{% if next %}
-<button class="next"
-type="button"
-onclick="location.href='/display/{{ next }}{% if keyword_url %}?keyword={{ keyword_url }}{% endif %}'">
-Next
-</button>
-{% endif %}
+{{ format|safe }}
+
+<br/>
+{% if prev %}<a href="{% url 'display' prev.id %}" title="{{ prev.title }}">Previous - {% if prev.title|length > 10 %}{{ prev.title|slice:":10" }}...{% else %}{{ prev.title }}{% endif %}</a>{% endif %}
+{% if next %}<a href="{% url 'display' next.id %}" title="{{ next.title }}">Next - {% if next.title|length > 10 %}{{ next.title|slice:":10" }}...{% else %}{{ next.title }}{% endif %}</a>{% endif %}
+
+<script type="text/javascript">
+    // Arrow key navigation
+    $(document).keydown(function(e){
+        {% if prev %}
+        if (e.keyCode == 37) { // Left arrow
+            window.location.href = "{% url 'display' prev.id %}";
+        }
+        {% endif %}
+         
+        {% if next %}
+        if (e.keyCode == 39) { // Right arrow
+            window.location.href = "{% url 'display' next.id %}";
+        }
+        {% endif %}
+        return false;
+    });
+</script>
+
 {% endblock %}

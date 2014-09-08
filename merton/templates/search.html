@@ -1,52 +1,55 @@
 {% extends 'base.html' %}<!-- Everything should extend 'base.html' -->
 {% block page %} - Home{% endblock %}
 
-{% block head %}
-  <script type="text/javascript">
-  function changeIframeSrc(new_src) {
-  frame = document.getElementById('main_iframe')
-  frame.src = new_src
-  }
-  function resizeIframe(obj) {
-    obj.style.height = '0px';
-    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-  }
-  </script>
-<style type="text/css">
-a.qn {
-  cursor: pointer;
-  font-size: 13px;
-  color:#666699;
-}
-</style>
-{% endblock %}
-
 {% block body %}
+<!-- Referenced from
+http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-lists.php
+-->
+
 <div>
   <h3>Search results for <i>{{ keyword }}</i>:</h3>
-  <ul>
-  {% for page in pages %}
-  {% if not page.div %}
-    <li>
-    <b>
+    
+    <div class="list-group">
+        <!-- Probably not the best way to do this, seems like a hack-->
+        {% for page in pages %}
+        <a href="/display/{{ page.id }}/?keyword={% for w in keywords %}{{ w }}+{% endfor %}" class="list-group-item" title="{{ page.title }}">
+            <h4 class="list-group-item-heading">
     {% if page.title|length > 30 %}
     {{ page.title|slice:":30" }}...
     {% else %}
     {{ page.title }}
-    {% endif %}
-    </b>
-    <a class="qn"
-    onclick="changeIframeSrc('/quickview/{{ page.id }}/?keyword={{ keyword }}')">
-    Quick View</a> | 
-    <a class="qn" onclick="location.href='/display/{{ page.id }}/?keyword={{ keyword }}'">Navigate</a>
-    </li>
-  {% endif %}
-  {% endfor %}
-  </ul>
-  <iframe id="main_iframe" width="100%" onload='javascript:resizeIframe(this);'
-  style="border:1px solid black;"
-  src="{% if pages %}
-  /quickview/{{ pages.0.id }}/?keyword={{ keyword }}
-  {% endif %}"></iframe>
+    {% endif %}</h4>
+            <p class="list-group-item-text">
+                <span class="highlight">{{ page.text }}</span>
+            </p>
+        </a>
+        {% endfor %}
+    </div>
 </div>
+
+<script type="text/javascript">
+    // Script to highlight text user-side
+    var objs = document.getElementsByClassName('highlight');
+    var words = [{% for word in keywords %}"{{ word }}",{% endfor %}];
+    var re = new RegExp("("+words.join(")|(")+")","i");
+    for (i = 0; i < objs.length; i++) {
+        var txt = objs[i].innerHTML;
+        fintext = "";
+        for (k = 0; k < 3; k++) {
+            var position = txt.search(re);
+            if (position < 0) {
+                break;
+            } else {
+                samp = txt.substring(position-50, position+50);
+                txt = txt.substring(position+3);
+            }
+            for (j = 0; j < words.length; j++) {
+                var nre = new RegExp("(" + words[j] + ")","i");
+                samp = samp.replace(nre, '<span style="color: red;">$1</span>')
+            }
+            fintext += samp + "<br>";
+        }
+        objs[i].innerHTML = fintext;
+    }
+</script>
 {% endblock %}

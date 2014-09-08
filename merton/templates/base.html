@@ -1,45 +1,87 @@
+<!DOCTYPE html>
 <html>
-<head>
-<title>Red Diary{% block page %}{% endblock %}</title>
-{% load staticfiles %}
-{% if metadata %}
-   {( metadata|safe }}
-{% endif %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/mertonv2.css' %}">
-<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
-{% block head %}{% endblock %}
-</head>
-<body{% block optional_onload %}{% endblock %}>
-<div class="container">
-<div class="header">
-  <a href="/home"><h1>Thomas Merton's Red Diary</h1></a>
-  <ul>
-  <li><a class="nav_text" href="/home/">Home</a><span class="break"> |</span></li>
-  <li><a class="nav_text" href="/contents/">Contents</a><span class="break"> |</span></li>
-  <li><a class="nav_text" href="/display/preface/">Foreward</a><span class="break"> |</span></li>
-  <li><a class="nav_text" href="/display/bibliography/">Bibliography</a><span class="break"> |</span></li>
-  <li><a class="nav_text" href="/display/index/">Index</a><span class="break"> |</span></li>
-  <li><a class="nav_text" href="/display/synopsis/">Synopsis</a><span class="break"> |</span></li>
-  <li><a class="nav_text" href="/browse/">Browse Quotations</a><span class="break"> |</span></li>
-  <li><a class="nav_text" href="/credits/">Credits</a><br>
-  </ul>
-  <form action="/search/" method="get">
-  <span id="key">
-  Key:
-  <p class="trans">Translations</p> |
-  <p class="note">Editor's Notes</p> |
-  <span class="inline-note-editor">[Inline Notes]</span>
-  </span>
-  <input type="text" value="Keyword Search" onfocus="this.value=''"
-  onblur="this.value='Keyword Search'" name="keyword"/>
-  <input type="submit" value="Search"/>
-  </form>
-</div>
-<div class="body">{% block body %}{% endblock %}</div>
-</div>
-{% include 'google-trackmerton.html' %}
-</body>
+    <head>
+        <title>Merton's Red Diary{% block page %}{% endblock %}</title>
+        {% load staticfiles %}
+        {% if metadata %}{{ metadata|safe }}{% endif %}
+        <meta name="viewport" content="width=640, initial-scale=.5, user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"><!-- Bootstrap -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}"><!-- Creates the sidebar -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/merton.css' %}"><!-- Main CSS -->
+        <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+        {% block head %}{% endblock %}
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><!-- jQuery -->
+    </head>
+    <body>
+        
+        <!-- Sidebar -->
+<!--
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                
+                
+                <ul class="navbar-header">
+                    <li><a class="nav_text" href="{% url 'index' %}">Home</a></li>
+                    <li><a class="nav_text" href="{% url 'contents' %}">Contents</a></li>
+                    <li><a class="nav_text" href="http://beck.library.emory.edu/" target="_blank">Beck Center</a></li>
+                    <li><a class="nav_text" href="{% url 'display' 'credits' %}">Credits</a></li>
+                    <li>
+                        <form action="{% url 'search' %}" method="get">
+                            <input type="text" value="Keyword Search" onfocus="this.value='';" onblur="this.value='Keyword Search';" name="keyword"/>
+                            <input type="submit" class="btn btn-default" value="Submit" />
+                        </form>
+                    </li>
+                    <li>
+                        <a href="http://www.tei-c.org/">
+                            <img src="http://www.tei-c.org/About/Badges/powered-by-TEI.png" alt="Powered by TEI" border="0"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+-->
+        
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'index' %}" style="color: #A80000">Thomas Merton's Red Diary</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'contents' %}">Contents</a></li>
+                        <li><a href="http://beck.library.emory.edu/" target="_blank">Beck Center</a></li>
+                        <li><a href="{% url 'display' 'credits' %}">Credits</a></li>
+                        <li>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+        
+        <!-- Beginning of content -->
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+        
+        <div class="footer">
+            <div class="container">
+                <form action="{% url 'search' %}" method="get">
+                    <input type="text" value="Keyword Search" onfocus="this.value='';" onblur="this.value='Keyword Search';" name="keyword"/>
+                    <input type="submit" class="btn btn-default" value="Submit" />
+                </form>
+            </div>
+        </div>
+        
+        <script src="{% static 'js/bootstrap.min.js' %}"></script><!-- Bootstrap -->
+        <script src="{% static 'js/main.js' %}"></script><!-- Main -->
+        {% include 'google-trackmerton.html' %}
+        </body>
 </html>
