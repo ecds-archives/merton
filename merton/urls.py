@@ -9,4 +9,6 @@ urlpatterns = patterns('merton/views',
     url(r'^credits/$', credits, name='credits'),
     url(r'^display/(.+)/$', display_page, name='display'),
     url(r'^search/$', search, name='search'),
+    url(r'^download$', send_file, name='send_file'),
+
 )

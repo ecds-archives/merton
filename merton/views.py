@@ -1,11 +1,14 @@
 import os
 import re
+import tempfile, zipfile
+from django.core.servers.basehttp import FileWrapper
+import mimetypes
 
 from merton_app.models import *
 from merton_app.forms import *
 
 from django.conf import settings
-from django.http import Http404
+from django.http import Http404,HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
@@ -92,3 +95,13 @@ def search(request):
     else:
         context['keyword'] = '<empty>'
     return render_to_response('search.html',context,context_instance=RequestContext(request))
+
+def send_file(request):
+    filename  = os.path.join(settings.BASE_DIR, 'static', 'txt', 'merton_diary.txt' )
+    download_name = 'merton_diary.txt'
+    wrapper      = FileWrapper(open(filename))
+    content_type = mimetypes.guess_type(filename)[0]
+    response     = HttpResponse(wrapper,content_type=content_type)
+    response['Content-Length']      = os.path.getsize(filename)    
+    response['Content-Disposition'] = "attachment; filename=%s"%download_name
+    return response
