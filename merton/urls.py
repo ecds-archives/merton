@@ -10,5 +10,11 @@ urlpatterns = patterns('merton/views',
     url(r'^display/(.+)/$', display_page, name='display'),
     url(r'^search/$', search, name='search'),
     url(r'^download$', send_file, name='send_file'),
-
+    url(r'^bibliography/$', bibliography, name='bibliography'),
+    url(r'^browse/$', browse, name='browse'),
+    url(r'^quickview/(.+)/$', quickview),
+    url(r'^imageview/(.+)/$', imageview),
+    url(r'^preface/$', preface, name='preface'),    
+    url(r'^synopsis/$', synopsis, name='synopsis'),
+    url(r'^register/$', register, name='index'),    
 )

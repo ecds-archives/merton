@@ -1,33 +1,82 @@
+<!--Some mundane and useless documentation
+This page ought to load a table of contents.
+Vision for this page:
+-Use XQuery (maybe) to grab and display all the contents of the document
+-Use some CSS to make it look nice
+-->
 {% extends 'base.html' %}<!-- Everything should extend 'base.html' -->
-{% block page %} - Home{% endblock %}
+{% load staticfiles %}
+{% block page %} - Contents{% endblock %}
 
+{% block optional_onload %} onload="unexpandAll()"{% endblock %}
+
+{% block head %}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+<script type='text/javascript'>
+function unexpandAll() {//Unexpands all sections on load
+  arrows = document.getElementsByClassName("showhidearrow");
+  for (var i = 0; i < arrows.length; i++) {
+    if (arrows[i]) {
+      showhide(arrows[i].id);
+    }
+  }
+}
+unexpanded_arrow = "{% static 'images/unexpanded_arrow.png' %}"
+expanded_arrow = "{% static 'images/expanded_arrow.png' %}"
+function showhide(clicked_id) { /*Expands and unexpands a section*/
+	targ = 'ul.'+clicked_id
+	$(targ).slideToggle(300);
+	current_image = document.getElementById(clicked_id).src.split('/')
+	image_name = current_image[current_image.length - 1]
+	if (image_name == 'expanded_arrow.png') {
+		document.getElementById(clicked_id).src = unexpanded_arrow
+	} else {
+		document.getElementById(clicked_id).src = expanded_arrow
+	}
+}
+</script>
+{% endblock %}
 {% block body %}
 
-<div class="container-fluid">
-    <table class="table table-condensed">
-        <thead>
-            <tr>
-                <th>Contents</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for page in pages %}
-            <tr><td>
-                <a href="{% url 'display' page.id %}" title="{{ page.title }}">
-                    {% if page.title|length > 30 %}
-                    {{ page.title|slice:":30" }}...
-                    {% else %}
-                    {{ page.title }}
-                    {% endif %}
-                </a>
-            </td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<!-- Optional bibliography {{ merton_bib | safe }} -->
 
-<div class="downloads">
-  <p><b><a href="{% url 'send_file' %}">Download Diary as Plain Text</a><b></p>
-</div>
-    
-</div>
+<br /><br /><b>Contents</b>
+<br />
+<ul>
+{% for item in list %}
+<li>
+<!-- If the element has child elements -->
+{% if item.children %}
+  <span>
+  <a href="/display/{{ item.id }}"
+  title="item.n">{{ item.n }}</a>
+  <img id="{{ item.id }}"
+  class="showhidearrow"
+  onclick="showhide(this.id)"
+  src="{% static 'images/expanded_arrow.png' %}">
+  </img>
+  </span>
+<ul class="{{ item.id }}">
+{% for child in item.children %}
+<li>
+  <a href="/display/{{ child.id }}"
+  title="{{ child.n }}">{{ child.n }}</a>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<!-- If the element DOESN'T have child elements -->
+<a href="/display/{{ item.id }}" title="{{ item.n }}">
+{% if item.n|length < 39 %}
+{{ item.n }}
+{% else %}
+{{ item.n|slice:"36" }}...
+{% endif %}
+</a>
+{% endif %}
+</li>
+{% endfor %}
+</ul>  
 {% endblock %}

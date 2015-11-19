@@ -24,18 +24,9 @@ formatter. We'll go with this approach for a bit to see if it works.
 <meta name="DC.date" content="2006-06-06"/>
 {% endblock %}
 {% block body %}
-<div class="container">
-    <h3>
-        <table>
-            <tbody>
-                <tr><td><a href="{% url 'contents' %}">Table of Contents</a></td></tr>
-                <tr><td><a href="{% url 'display' 'preface' %}">Foreward</a></td></tr>
-                <tr><td><a href="{% url 'display' 'bibliography' %}">Bibliography</a></td></tr>
-                <tr><td><a href="{% url 'display' 'index' %}">Index</a></td></tr>
-                <tr><td><a href="{% url 'display' 'synopsis' %}">Synopsis</a></td></tr>
-                <tr><td><a href="{% url 'about' %}">About</a></td></tr>
-            </tbody>
-        </table>
-    </h3>
-</div>
+<body>
+    <p>In 1964 and 1965 Thomas Merton used a red-leather "day-by-day" calendar for the year 1959 as a diary. Unlike his other published diaries and journals, this diary was not used for personal entries; rather he used it as a collection for the words of others. As noted by Erasmo Leiva-Merikakis and Jonathan Montaldo in the <a href="{% url 'display' 'preface' %}">Foreword</a> to the print edition, "the Red Diary is a convergence of Merton's spontaneous attractions." This collection of the thoughts and writings of others provide us with insight into Merton's "interior climate" - "these collected'words' reflect his fears and his hopes, and more importantly they reflect his prayer, at this new and long awaited juncture in his life" - that of living full-time at his hermitage.</p>
+
+
+</body>
 {% endblock %}
