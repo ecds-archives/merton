@@ -153,6 +153,10 @@ def register(request):
     context = {}
     return render_to_response('register.html',context,context_instance=RequestContext(request))
 
+def facsimiles(request):
+    context = {}
+    return render_to_response('facsimiles.html',context,context_instance=RequestContext(request))
+
 def imageview(request, image):
     context = {}
     images = [ f for f in listdir(image_folder) if isfile(join(image_folder, f)) ]
@@ -186,7 +190,7 @@ def contents(request):
     context['list'] = doc_list
     return render_to_response('contents.html', context, context_instance=RequestContext(request))
 
-def browse(request,category):
+def browse(request,category, *args, **kwargs):
     context = {}
     url_params = request.GET
     if 'filter' in url_params and url_params['filter']:

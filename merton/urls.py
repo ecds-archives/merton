@@ -16,5 +16,6 @@ urlpatterns = patterns('merton/views',
     url(r'^imageview/(.+)/$', imageview),
     url(r'^preface/$', preface, name='preface'),    
     url(r'^synopsis/$', synopsis, name='synopsis'),
-    url(r'^register/$', register, name='index'),    
+    url(r'^register/$', register, name='index'),
+    url(r'^facsimiles/$', facsimiles, name='facsimiles'),    
 )
