@@ -4,7 +4,7 @@
 		xmlns:exist="http://exist.sourceforge.net/NS/exist"
                version="1.0">
 
-  <xsl:variable name="figure-path">/Users/bbolte/Sites/Merton/merton/static/images/pages/</xsl:variable>
+  <xsl:variable name="figure-path">http://beck.library.emory.edu/merton/image-content/</xsl:variable>
   <xsl:variable name="figure-suffix">.jpg</xsl:variable>
   <xsl:variable name="thumbnail-path">http://beck.library.emory.edu/frenchrevolution/image-content/thumbnails/</xsl:variable>
   <xsl:variable name="thumbnail-suffix">.gif</xsl:variable>
