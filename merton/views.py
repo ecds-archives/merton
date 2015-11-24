@@ -85,8 +85,6 @@ def display_page(request, doc_id):
         raise Http404
     all_pages = xmlmap.load_xmlobject_from_string(text_xml, xmlclass=AllPages)
     format = page.xsl_transform(filename=display_xsl)
-    next = ''
-    prev = ''
     foundit = False
     for some_page in all_pages.pages:
         next = some_page.id
