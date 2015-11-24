@@ -17,12 +17,24 @@ type="button"
 onclick="location.href='/display/{{ prev }}/{% if keyword_url %}?keyword={{ keyword_url }}{% endif %}'">
 Previous
 </button>
+{% else %}
+<button class="prev"
+type="button"
+onclick="location.href='{% url 'index' %}'">
+Home
+</button>
 {% endif %}
 {% if next %}
 <button class="next"
 type="button"
 onclick="location.href='/display/{{ next }}{% if keyword_url %}?keyword={{ keyword_url }}{% endif %}'">
 Next
+</button>
+{% else %}
+<button class="prev"
+type="button"
+onclick="location.href='{% url 'index' %}'">
+Home
 </button>
 {% endif %}
 

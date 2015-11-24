@@ -85,6 +85,8 @@ def display_page(request, doc_id):
         raise Http404
     all_pages = xmlmap.load_xmlobject_from_string(text_xml, xmlclass=AllPages)
     format = page.xsl_transform(filename=display_xsl)
+    next = ''
+    prev = ''
     foundit = False
     for some_page in all_pages.pages:
         next = some_page.id
@@ -98,7 +100,7 @@ def display_page(request, doc_id):
     context['format'] = format.serialize()
     if next != page.id:
         context['next'] = next
-    if prev:
+    if prev != page.id:
         context['prev'] = prev
     dateline = ''
     if len(page.dateline) > 1 and page.dateline[1].strip() != '':
