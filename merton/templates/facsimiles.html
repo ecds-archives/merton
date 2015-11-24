@@ -17,17 +17,18 @@ This should be equivalent to fascimiles.php from the original site.
  <div  class="row">
 
 {% for item in list %}
+{% if "X" in item.id %}
 <!-- If the element has child elements -->
 
  <!-- If the element DOESN'T have child elements -->
- 	 <div  id="list{{ item.id }}"  class="col-sm-3" align="middle"><a href="http://beck.library.emory.edu/merton/image-content/{{item.id}}.jpg"  class="thumbnail" style="width:200px;height:250px;overflow:auto"><img
+ 	 <div  id="list{{ item.id }}"  class="col-sm-3" align="middle"><a href="http://beck.library.emory.edu/merton/image-content/{{item.id}}.jpg"  class="thumbnail" style="width:200px;height:250px"><img
  	 src="http://beck.library.emory.edu/merton/image-content/{{item.id}}.jpg"
  	 style="width:75%"
  	 alt="view image"
  	 align="center"><p class="caption" align="middle" style="height:100px">{{ item.id }}, {{ item.n }}
 	</p></a></div>
 
-
+{% endif %}
 	{% endfor %}
 </div>
 </div>
