@@ -15,25 +15,11 @@
 {{ format|safe }}
 
 <br/>
-{% if prev %}<a href="{% url 'display' prev.id %}" title="{{ prev.title }}">Previous - {% if prev.title|length > 10 %}{{ prev.title|slice:":10" }}...{% else %}{{ prev.title }}{% endif %}</a>{% endif %}
-{% if next %}<a href="{% url 'display' next.id %}" title="{{ next.title }}">Next - {% if next.title|length > 10 %}{{ next.title|slice:":10" }}...{% else %}{{ next.title }}{% endif %}</a>{% endif %}
 
-<script type="text/javascript">
-    // Arrow key navigation
-    $(document).keydown(function(e){
-        {% if prev %}
-        if (e.keyCode == 37) { // Left arrow
-            window.location.href = "{% url 'display' prev.id %}";
-        }
-        {% endif %}
-         
-        {% if next %}
-        if (e.keyCode == 39) { // Right arrow
-            window.location.href = "{% url 'display' next.id %}";
-        }
-        {% endif %}
-        return false;
-    });
-</script>
+{% if prev %}
+{{prev.id}} stuff
+{% else %}
+<p>no</p>
+{% endif %}
 
 {% endblock %}

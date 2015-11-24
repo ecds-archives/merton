@@ -49,13 +49,13 @@ Quotations{% if filter %} by {{ filter }}{% endif %}:
   {% for quote in quotes %}
   {% if not filter or quote.grouper|lower == filter|lower %}
     {% if quote.grouper and quote.grouper != "None" %}
-      <li><a class="mobile_option" onclick="showhide('{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}')">{{ quote.grouper }} <font size='2'>{{ quote.list|length }} Result{{ quote.list|length|pluralize }}</font></a>
-  <img id="{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}"
+      <li><img id="{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}"
   class="showhidearrow"
   onclick="showhide(this.id)"
-  src="{% static 'images/expanded_arrow.png' %}">
+  src="{% static 'images/unexpanded_arrow.png' %}">
   </img>
-      <ul class="{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}">
+  <a class="mobile_option" onclick="showhide('{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}')">{{ quote.grouper }} <font size='2'>{{ quote.list|length }} Result{{ quote.list|length|pluralize }}</font></a>
+      <ul class="{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}" style="display:none">
         {% for item in quote.list %}
           <li><a href="/display/{{ item.id|slice:':3' }}">
 	{{ item.title }}</a>: {{ item.text|slice:':100' }}...</li>

@@ -3,5 +3,30 @@ This should be equivalent to fascimiles.php from the original site.
 -->
 {% extends 'base.html' %}<!-- Everything should extend 'base.html' -->
 {% block page %} - Facsimiles{% endblock %}
-{% block body %}Eventually this will be equivalent to facsimiles.php from
-the original site.{% endblock %}
+{% block body %}
+
+<p>Eventually this will be equivalent to facsimiles.php from
+the original site.</p>
+
+<div class="content">
+<div class="centering text-center">
+<h2>Facsimiles</h2><?xml version="1.0"?>
+<body onload="load_status(304, 'ILN-figure')" onunload="store_status(304, 'ILN-figure')"><noscript><i>Note: This site works best with Javascript enabled.</i><style type="text/css">
+	ul.contents { display: block } 
+        img.javascript { display: none }
+      </style><p>Because you do not have Javascript running, you may prefer to browse <a href="volume.php" rel="alternate">volumes</a> separately.</p></noscript>
+
+{% for item in list %}
+  <p><button class="toggle" onclick="toggle_ul('list{{ page.name }}')">{{page.name}}</button></p>
+
+<div id='list{{ page.name }}' class='collapse' style='display: none;'>
+  </div>
+
+ </body>
+{% endfor %}
+
+{% include "search_illustrations.html" %} 
+</div>  
+</div>
+
+{% endblock %}

@@ -108,6 +108,7 @@ def display_page(request, doc_id):
     context['dateline'] = dateline
     return render_to_response('display_page.html', context, context_instance=RequestContext(request))
 
+
 def quickview(request, doc_id):
     url_params = request.GET
     context = {}
@@ -155,6 +156,8 @@ def register(request):
 
 def facsimiles(request):
     context = {}
+    doc_list = Page.objects.only('name').order_by('name')
+    context['list'] = doc_list
     return render_to_response('facsimiles.html',context,context_instance=RequestContext(request))
 
 def imageview(request, image):
@@ -190,7 +193,7 @@ def contents(request):
     context['list'] = doc_list
     return render_to_response('contents.html', context, context_instance=RequestContext(request))
 
-def browse(request,category, *args, **kwargs):
+def browse(request, category=None, *args, **kwargs):
     context = {}
     url_params = request.GET
     if 'filter' in url_params and url_params['filter']:

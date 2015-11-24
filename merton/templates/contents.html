@@ -50,15 +50,14 @@ function showhide(clicked_id) { /*Expands and unexpands a section*/
 <!-- If the element has child elements -->
 {% if item.children %}
   <span>
-  <a href="/display/{{ item.id }}"
-  title="item.n">{{ item.n }}</a>
   <img id="{{ item.id }}"
   class="showhidearrow"
   onclick="showhide(this.id)"
-  src="{% static 'images/expanded_arrow.png' %}">
-  </img>
+  src="{% static 'images/unexpanded_arrow.png' %}">
+  </img><a href="/display/{{ item.id }}"
+  title="item.n">{{ item.n }}</a>
   </span>
-<ul class="{{ item.id }}">
+<ul class="{{ item.id }}"  style="display:none">
 {% for child in item.children %}
 <li>
   <a href="/display/{{ child.id }}"
