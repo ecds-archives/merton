@@ -156,11 +156,17 @@ def register(request):
 
 def facsimiles(request):
     context = {}
-    doc_list = Page.objects.only('name').order_by('name')
+    bibliography = xmlmap.load_xmlobject_from_string(text_xml, xmlclass=MertonBibliography)
+    context['merton_bib'] = bibliography.citation
+    merton = xmlmap.load_xmlobject_from_string(text_xml, xmlclass=AllPages)
+    doc_list = []
+    for div in merton.pages:
+        if div.parent.type != 'div':
+            doc_list.append(div)
     context['list'] = doc_list
     return render_to_response('facsimiles.html',context,context_instance=RequestContext(request))
 
-def imageview(request, image):
+def imageview(request, image=None):
     context = {}
     images = [ f for f in listdir(image_folder) if isfile(join(image_folder, f)) ]
     prev = ''
