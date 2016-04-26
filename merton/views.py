@@ -215,7 +215,8 @@ def browse(request, category=None, *args, **kwargs):
             "author": quote.author,
             "id":quote.quotation.id,
             "text":quote.quotation.text_string,
-            "title":quote.quotation.parent.parent.n
+            "section":quote.quotation.parent.parent.n,
+            "title":quote.quotation.type
         }
         if quote.quotation.lang == 'eng':
             appendage['lang'] = 'English'
@@ -223,6 +224,8 @@ def browse(request, category=None, *args, **kwargs):
             appendage['lang'] = 'French'
         elif quote.quotation.lang == 'lat':
             appendage['lang'] = 'Latin'
+        elif quote.quotation.lang == 'grc':
+            appendage['lang'] = 'Greek'
         else:
             appendage['lang'] = 'None'
         doc_list.append(appendage)

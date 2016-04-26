@@ -38,12 +38,15 @@ function showhide(clicked_id) { /*Expands and unexpands a section*/
 </script>
 <b>Browse quotations by category:</b><br />
 <a href="/browse/author">Author</a><br />
-<a href="/browse/language">Language</a><br /><br />
-Quotations{% if filter %} by {{ filter }}{% endif %}:
+<a href="/browse/language">Language</a><br />
+<a href="/browse/title">Title</a><br /><br />
+Quotations{% if category %} by {{ category }}{% endif %}:
 {% if category == "language" %}
   {% regroup quotes|dictsort:"lang" by lang as quotes %}
 {% elif category == "author" %}
   {% regroup quotes|dictsort:"author" by author as quotes %}
+{% elif category == "title" %}
+  {% regroup quotes|dictsort:"title" by title as quotes %}
 {% endif %}
 <ul>
   {% for quote in quotes %}
@@ -58,7 +61,7 @@ Quotations{% if filter %} by {{ filter }}{% endif %}:
       <ul class="{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}" style="display:none">
         {% for item in quote.list %}
           <li><a href="/display/{{ item.id|slice:':3' }}">
-	{{ item.title }}</a>: {{ item.text|slice:':100' }}...</li>
+	{{ item.section }}</a>: {{ item.text|slice:':100' }}...</li>
         {% endfor %}
       </ul>
       </li>

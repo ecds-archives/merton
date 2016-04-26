@@ -1,0 +1,21 @@
+http://beck.library.emory.edu/merton/image-content/thumbnails/X07.gif
+http://beck.library.emory.edu/merton/image-content/X07.jpg
+
+
+<p class="caption" align="middle" style="height:100px">{{ child.id }}, {{ child.n }}</p>
+
+{% if item.children and "X" in item.id %}
+
+  <div class="row">
+	{% for child in item.children %}
+
+	  <div class="col-sm-1"><a href="http://beck.library.emory.edu/merton/image-content/{{item.id}}.jpg"  class="thumbnail" style="width:200px;height:250px;overflow:auto"><img
+	  src="http://beck.library.emory.edu/merton/image-content/{{item.id}}.jpg"
+	  style="width:75%"
+	  alt="view image"
+	  align="center"><p class="caption" align="middle" style="height:100px">{{ child.id }}, {{ child.n }}</p></a>
+      </div>
+  </div>
+
+  {% endfor %}
+  {% else %}
