@@ -80,6 +80,7 @@ class QuoteFields(XmlObject):
     ROOT_NAMESPACES = {'tei': TEI_NAMESPACE}
     quotation = NodeField('.', Fields)
     author = StringField('../tei:bibl/tei:author/tei:name/tei:choice/tei:sic')
+    title = StringField('../tei:bibl/tei:title')
 
 class AllPages(XmlObject):
     ROOT_NAMESPACES = {'tei': TEI_NAMESPACE}

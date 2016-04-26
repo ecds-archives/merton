@@ -39,14 +39,14 @@ function showhide(clicked_id) { /*Expands and unexpands a section*/
 <b>Browse quotations by category:</b><br />
 <a href="/browse/author">Author</a><br />
 <a href="/browse/language">Language</a><br />
-<a href="/browse/title">Title</a><br /><br />
+<a href="/browse/work">Title</a><br /><br />
 Quotations{% if category %} by {{ category }}{% endif %}:
 {% if category == "language" %}
   {% regroup quotes|dictsort:"lang" by lang as quotes %}
 {% elif category == "author" %}
   {% regroup quotes|dictsort:"author" by author as quotes %}
-{% elif category == "title" %}
-  {% regroup quotes|dictsort:"title" by title as quotes %}
+{% elif category == "work" %}
+  {% regroup quotes|dictsort:"work" by work as quotes %}
 {% endif %}
 <ul>
   {% for quote in quotes %}

@@ -215,7 +215,8 @@ def browse(request, category=None, *args, **kwargs):
             "author": quote.author,
             "id":quote.quotation.id,
             "text":quote.quotation.text_string,
-            "title":quote.quotation.parent.parent.n
+            "title":quote.quotation.parent.parent.n,
+            "work":quote.title
         }
         if quote.quotation.lang == 'eng':
             appendage['lang'] = 'English'
