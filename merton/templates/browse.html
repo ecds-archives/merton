@@ -61,7 +61,7 @@ Quotations{% if category %} by {{ category }}{% endif %}:
       <ul class="{{ quote.list.0.id|slice:':3' }}{{ quote.list.0.id|slice:'4:' }}" style="display:none">
         {% for item in quote.list %}
           <li><a href="/display/{{ item.id|slice:':3' }}">
-	{{ item.section }}</a>: {{ item.text|slice:':100' }}...</li>
+	{{ item.title }}</a>: {{ item.text|slice:':100' }}...</li>
         {% endfor %}
       </ul>
       </li>

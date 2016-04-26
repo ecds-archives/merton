@@ -42,8 +42,8 @@ class Bibliography(XmlObject):
     	return mark_safe('<i>%(title)s</i>, by %(author)s. Edited by %(editors)s.' % cit)
     def formatted_citation(self):
         cit = {
-            "author": self.author,
-            "editor": self.editor,
+            "author": '',
+            "editor": '',
             "title": self.title,
             "pubplace": self.pubplace,
             "publisher":  self.publisher,
