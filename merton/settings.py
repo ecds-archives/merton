@@ -4,34 +4,6 @@ from os import path
 
 BASE_DIR = path.dirname(path.abspath(__file__))
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-DEV_ENV = True
-
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
-
-MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
-
-EXISTDB_SERVER_PROTOCOL = "http://"
-EXISTDB_SERVER_HOST     = "kamina.library.emory.edu:8080/exist/"
-EXISTDB_SERVER_USER     = ""
-EXISTDB_SERVER_PASSWORD = ""
-EXISTDB_SERVER_URL      = EXISTDB_SERVER_PROTOCOL + EXISTDB_SERVER_HOST
-EXISTDB_ROOT_COLLECTION = "/merton"
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -95,8 +67,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'u+-w%pv^b$swd91x=i$i+vhu-v$vqcf_2uwef$$wb3k+sgkl3d'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -163,65 +133,20 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 # the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
-import logging
-LOGGING_LEVEL=logging.DEBUG
-LOGGING_FORMAT="%(asctime)s : %(name)s:  %(levelname)s : %(message)s"
-LOGGING_FILENAME="" # "" will print to stdout
 
-LOGGING = {
-    'version': 1,
-    'formatters': {
-        'basic': {
-            'format': '[%(asctime)s] %(levelname)s:%(name)s::%(message)s',
-            'datefmt': '%d/%b/%Y %H:%M:%S',
-        },
-    },
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'handlers': {
-        'mail_admins': {
-            'filters': ['require_debug_false'],
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': True,
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'basic'
-        },
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/tmp/django-findingaids.log',
-            'maxBytes': 1024,
-            'backupCount': 3,
-            'formatter': 'basic',
-        },
 
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-        'django': {
-            'handlers': ['file'],
-            'level': 'WARN',
-            'propagate': True,
-        },
-        'eulexistdb': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+import sys
 
-        },
-    }
-}
+# import localsettings
+# This will override any previously set value
+try:
+    from localsettings import *
+except ImportError:
+    print >>sys.stderr, '''Settings not defined. Please configure a version
+        of localsettings.py for this site. See localsettings.py.dist for
+        setup details.'''
+
+
 ''' If using localsettings.py:
 try:
     from localsettings import *
