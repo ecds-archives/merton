@@ -18,6 +18,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 from django.template.loader import get_template
+from django.contrib import messages
 
 from eulxml.xmlmap.teimap import Tei, TeiDiv, _TeiBase, TEI_NAMESPACE, xmlmap
 from eulcommon.djangoextras.http.decorators import content_negotiation
@@ -25,6 +26,7 @@ from eulcommon.djangoextras.http.decorators import content_negotiation
 import eulexistdb
 from eulexistdb.query import escape_string
 from eulexistdb.exceptions import DoesNotExist, ReturnedMultiple
+from eulexistdb.db import ExistDBException
 
 # Loads red_diary.xml as a string from database
 db = eulexistdb.db.ExistDB(settings.EXISTDB_SERVER_URL)
@@ -47,6 +49,7 @@ def index(request):
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
 def search(request):
+    query_error = False
     form = SearchForm(request.GET)
     context = {'searchform': form}
     search_opts = {}
@@ -56,16 +59,31 @@ def search(request):
             keyword = form.cleaned_data['keyword']
             search_opts['fulltext_terms'] = '%s' % form.cleaned_data['keyword']
             search_opts['highlight'] = True
-            
-        pags = Search.objects.filter(**search_opts).order_by('-fulltext_score')
-            
-        pages = pags.all()
         
-        context['pages'] = pages
-        context['keyword'] = keyword
+        try:    
+            pags = Search.objects.filter(**search_opts).order_by('-fulltext_score')
+            
+            pages = pags.all()
+        
+            context['pages'] = pages
+            context['keyword'] = keyword
+            response = render_to_response('search.html', context, context_instance=RequestContext(request))
+
+        except ExistDBException as e:
+            query_error = True
+            if 'Cannot parse' in e.message():
+                messages.error(request, 'Your search query could not be parsed.  ' + 'Please revise your search and try again.')
+            else:
+                # generic error message for any other exception
+                messages.error(request, 'There was an error processing your search.')
+            response = render(request, 'search.html',{'search': form, 'request': request})
+            
     else:
         context['keyword'] = 'a vast expanse of nothingness'
-    return render_to_response('search.html', context, context_instance=RequestContext(request))
+    if query_error:
+        response.status_code = 400
+
+    return response
 
 def display_page(request, doc_id):
     url_params = request.GET

@@ -8,7 +8,13 @@ http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-lists.php
 
 <div>
   <h3>Search results for <i>{{ keyword }}</i>:</h3>
-    
+{% if messages %}
+<ul class="messages">
+    {% for message in messages|slice:":1" %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><font color="red">{{ message }}</font></li>
+    {% endfor %}
+</ul>
+{% endif %}    
     <div class="list-group">
         <!-- Probably not the best way to do this, seems like a hack-->
         {% for page in pages %}
